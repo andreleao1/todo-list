@@ -1,5 +1,7 @@
 package br.com.agls.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,11 +15,22 @@ public class TaskDao {
 	private EntityManager entityManager;
 
 	public void save(Task task) {
-		entityManager.persist(task);
+		this.entityManager.persist(task);
 	}
 
-	public Task findByTitle(String title) {
-		return entityManager.createQuery("SELECT task FROM Task task WHERE task.title = " + title, Task.class)
-				.getResultList().get(0);
+	public void update(Task task) {
+		this.entityManager.merge(task);
+	}
+
+	public void remove(Task task) {
+		this.entityManager.remove(task);
+	}
+
+	public Task findById(Long taskId) {
+		return this.entityManager.find(Task.class, taskId);
+	}
+
+	public List<Task> findAll() {
+		return this.entityManager.createQuery("SELECT task from Task task", Task.class).getResultList();
 	}
 }

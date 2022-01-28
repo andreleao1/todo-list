@@ -8,7 +8,7 @@ public interface TaskService {
 
 	public void save(Task task);
 	
-	public void remove(Task task);
+	public void remove(Long taskId);
 
 	public Task find(Long taskId);
 

@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import br.com.agls.dao.TaskDao;
 import br.com.agls.entity.Task;
-import br.com.agls.exception.EntityNullException;
+import br.com.agls.exception.EntityNotFoundException;
 import br.com.agls.exception.InvalidDateException;
 import br.com.agls.exception.InvalidHourException;
 import br.com.agls.service.interfaces.TaskService;
@@ -41,7 +41,9 @@ public class TaskServiceImpl implements TaskService {
 	
 	private void validateDateAndHour(LocalDate date, LocalTime hour) {
 		if(date.isBefore(LocalDate.now())) {
-			throw new InvalidDateException();
+			String message = "The date can't be before " + LocalDate.now() + ".";
+			LOGGER.warning(message);
+			throw new InvalidDateException(message);
 		}
 		if(date.isEqual(LocalDate.now())) {
 			validateHour(hour);
@@ -53,7 +55,9 @@ public class TaskServiceImpl implements TaskService {
 		int currentMinute = LocalTime.now().getMinute();
 		
 		if(hour.getHour() < currentHour && hour.getMinute() < currentMinute) {
-			throw new InvalidHourException();
+			String message = "The hour can't be before " + LocalTime.now() + ".";
+			LOGGER.warning(message);
+			throw new InvalidHourException(message);
 		}
 	}
 	
@@ -66,23 +70,23 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public void remove(Task task) {
-		Task taskFound = find(task.getId());
+	public void remove(Long taskId) {
+		Task taskFound = find(taskId);
 		this.taskDao.remove(taskFound);
 	}
 
 	@Override
 	public Task find(Long taskId) {
 		Task taskFound = this.taskDao.findById(taskId);
-		checkIsNotNull(taskFound);
+		checkIsNotNull(taskFound, taskId);
 		return taskFound;
 	}
 	
-	private void checkIsNotNull(Task task) {
+	private void checkIsNotNull(Task task, Long taskId) {
 		if (Objects.isNull(task)) {
-			String message = "The entity Task found in DB is null!";
+			String message = "Could not found Task with id: " + taskId;
 			LOGGER.warning(message);
-			throw new EntityNullException(message);
+			throw new EntityNotFoundException(message);
 		}
 	}
 

@@ -1,7 +1,8 @@
-package br.com.agls.controller.exception.response;
+package br.com.agls.controller.exception.response.utils;
 
 public enum HttpStatus {
 
+	CREATED(201),
 	BAD_REQUEST(400),
 	NOT_FOUND(404);
 	

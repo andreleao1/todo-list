@@ -43,7 +43,7 @@ public class ResponseBody {
 		return "{\r\n"
 				+ "	\"date\":\"" + this.date + "\",\r\n"
 				+ "	\"status\":\"" + this.status + "\",\r\n"
-				+ "	\"message\":\"" + this.message + "\",\r\n"
+				+ "	\"message\":\"" + this.message + "\"\r\n"
 				+ "}";
 	}	
 }

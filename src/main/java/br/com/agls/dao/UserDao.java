@@ -33,7 +33,7 @@ public class UserDao {
 	}
 	
 	public List<User> list() {
-		return this.entityManager.createQuery("SELECT * FROM User user", User.class).getResultList();
+		return this.entityManager.createQuery("SELECT user FROM User user", User.class).getResultList();
 	}
 	
 	public boolean existsByEmail(String email) {
@@ -56,6 +56,10 @@ public class UserDao {
 			return result.equals(1) ? false:true;
 		}
 		return false;
+	}
+	
+	public void delete(User user) {
+		this.entityManager.remove(user);
 	}
 
 }

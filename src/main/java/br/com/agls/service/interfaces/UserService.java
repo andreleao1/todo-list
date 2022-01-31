@@ -7,6 +7,8 @@ import br.com.agls.entity.User;
 public interface UserService {
 	
 	public void save(User user);
+	
+	public void delete(Long userId);
 
 	public List<User> list();
 

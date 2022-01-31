@@ -2,6 +2,7 @@ package br.com.agls.controller;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -47,5 +48,12 @@ public class UserController {
 	public Response update(User user) {
 		this.userService.save(user);
 		return Response.ok().build();
+	}
+	
+	@DELETE
+	@Path("/{userId}")
+	public Response delete(@PathParam("userId") Long userId) {
+		this.userService.delete(userId);
+		return Response.status(HttpStatus.NO_CONTENT.getStatusCode()).build();
 	}
 }

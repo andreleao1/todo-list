@@ -48,4 +48,10 @@ public class UserServiceImpl implements UserService{
 	public List<User> list() {
 		return this.userDao.list();
 	}
+	
+	@Override
+	public void delete(Long userId) {
+		User userFound = find(userId);
+		this.userDao.delete(userFound);
+	}
 }

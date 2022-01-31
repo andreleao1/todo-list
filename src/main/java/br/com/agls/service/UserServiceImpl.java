@@ -10,6 +10,7 @@ import br.com.agls.dao.UserDao;
 import br.com.agls.entity.User;
 import br.com.agls.exception.ExistingEntityException;
 import br.com.agls.service.interfaces.UserService;
+import br.com.agls.utils.TodoUtils;
 
 @Stateless
 public class UserServiceImpl implements UserService{
@@ -22,7 +23,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void save(User user) {
 		if (user.getId() != null) {
-			// Implementar lógica da atualização.
+			User userFound = find(user.getId());
+			TodoUtils.updateFields(user, userFound);
 		} else {
 			if(this.userDao.existsByEmail(user.getEmail())) {
 				this.userDao.save(user);				
@@ -35,10 +37,15 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public User find(Long userId) {
+		User userFound = this.userDao.findById(userId);
+		String className = User.class.getName();
+		TodoUtils.checkIsNotNull(userFound, userId, className);
+		return userFound;
+	}
+	
+	@Override
 	public List<User> list() {
 		return this.userDao.list();
 	}
-
-
-
 }

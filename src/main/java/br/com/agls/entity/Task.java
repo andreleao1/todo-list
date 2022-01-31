@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -28,6 +29,9 @@ public class Task {
 	
 	@NotNull
 	private LocalTime hour;
+	
+	@ManyToOne
+	private User user;
 	
 	public Task() {}
 
@@ -69,6 +73,14 @@ public class Task {
 
 	public void setHour(LocalTime hour) {
 		this.hour = hour;
+	}	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

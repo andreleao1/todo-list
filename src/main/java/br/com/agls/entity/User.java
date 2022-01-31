@@ -1,11 +1,15 @@
 package br.com.agls.entity;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -20,6 +24,9 @@ public class User {
 
 	@NotBlank
 	private String email;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Task> tasks;
 
 	public User() {
 		
@@ -47,6 +54,15 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}	
+
+	@JsonbTransient
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	@Override

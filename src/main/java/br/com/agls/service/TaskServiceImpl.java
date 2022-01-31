@@ -26,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
 
 	public void save(Task task) {
 		checkSchedule(task);
-		if (task.getId() != null) {
+		if(task.getId() != null) {
 			Task taskFound = find(task.getId());
 			updateFields(task, taskFound);
 			this.taskDao.update(taskFound);
